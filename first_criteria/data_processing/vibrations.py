@@ -60,7 +60,7 @@ def plot_group(group, frequency, df):
     plt.show()
     
 
-def assign_engine_group(n):
+def assignGroup(n):
     """ Return the group that the engine with 'n' belongs to
         n - frequency of the engine """
     groups = {
@@ -69,6 +69,7 @@ def assign_engine_group(n):
         3:(750,1500),
         4:(1500,10000)
     }
+    n = int(n)
     for group in groups.keys():
         if n >= groups[group][0] and n < groups[group][1]:
             return group

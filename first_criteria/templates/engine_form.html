@@ -11,8 +11,40 @@
 			<input name="name" id="id_name" placeholder="Марка">
 		</p>
 		<p>
-			<label>Частота вращения вала</label>
-			<input name="nu" id="id_nu" placeholder="Частота">
+			<label>Частота вращения вала n</label>
+			<input name="N_e" id="id_N_e" placeholder="Частота">
+		</p>
+		<p>
+			<label>Эффективная мощность N_е</label>
+			<input name="nu" id="id_nu" placeholder="Мощность">
+		</p>
+		<p>
+			<label>Среднее эффективное давление p_e</label>
+			<input name="pe" id="id_pe" placeholder="Давление">
+		</p>
+		<p>
+			<label>Максимальное давление цикла p_z</label>
+			<input name="pz" id="id_pz" placeholder="Давление">
+		</p>
+		<p>
+			<label>Максимальное значение боковой силы N_max</label>
+			<input name="N_max" id="id_N_max" placeholder="Сила">
+		</p>
+		<p>
+			<label>Зазор между поршнем и втулкой</label>
+			<input name="delta" id="id_delta" placeholder="Зазор">
+		</p>
+		<p>
+			<label>Жесткость втулки D_czvt</label>
+			<input name="D_czvt" id="id_D_czvt" placeholder="Жесткость">
+		</p>
+		<p>
+			<label>Жёсткость блока цилиндров D_czb</label>
+			<input name="D_czb" id="id_D_czb" placeholder="Жёсткость">
+		</p>
+		<p>
+			<label>Ход поршня S_n</label>
+			<input name="S_n" id="id_S_n" placeholder="Ход">
 		</p>
 		<button>Завершить</button>
 		{% csrf_token %}
