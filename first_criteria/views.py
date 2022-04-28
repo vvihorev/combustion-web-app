@@ -1,5 +1,8 @@
 from django.shortcuts import render, redirect
 from first_criteria.models import Engine
+from first_criteria.data_processing.vibrations import refreshBaseEngines
+
+import pandas as pd
 
 
 def engine_page(request):
