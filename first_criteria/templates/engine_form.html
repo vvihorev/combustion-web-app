@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Ввод данных дизелей</title>
+	</head>
+	<body>
+		<h1>Введите данные двигателя</h1>
+        <form method="POST" action="/add_engine">
+			<label>Частота вращения вала</label>
+            <input name="nu" id="id_nu" placeholder="Частота">
+            {% csrf_token %}
+        </form>
+	</body>
+</html>
