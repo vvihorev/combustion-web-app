@@ -6,8 +6,15 @@
 	<body>
 		<h1>Введите данные двигателя</h1>
         <form method="POST" action="/add_engine">
-			<label>Частота вращения вала</label>
-            <input name="nu" id="id_nu" placeholder="Частота">
+			<p>
+				<label>Наименование марки двигателя</label>
+				<input name="name" id="id_name" placeholder="Марка">
+			</p>
+			<p>
+				<label>Частота вращения вала</label>
+				<input name="nu" id="id_nu" placeholder="Частота">
+			</p>
+			<button>Завершить</button>
             {% csrf_token %}
         </form>
 	</body>

@@ -1,3 +1,5 @@
 from django.db import models
 
-# Create your models here.
+class Engine(models.Model):
+    name = models.TextField(default='some Engine')
+    nu = models.IntegerField(default='0')
