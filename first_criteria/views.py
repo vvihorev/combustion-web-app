@@ -13,9 +13,7 @@ def add_engine(request):
 
 
 def engine_results(request):
-    engine = Engine.objects.last()
-    vibration = engine.nu * 2
-    return render(request, 'engine_results.html', {'vibration':vibration})
+    return render(request, 'engine_results.html')
 
 
 def all_engines_page(request):

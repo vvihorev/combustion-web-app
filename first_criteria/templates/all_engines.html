@@ -1,23 +1,22 @@
-<!DOCTYPE html>
-<html lang="en">
-	<head>
-		<title>Просмотр введенных дизелей</title>
-	</head>
-	<body>
-		<h1>Добавленные двигатели</h1>
-        <table id="id_engines_table">
-            <tr>
-                <td>№ п./п.</td>
-                <td>Марка</td>
-                <td>Частота вращения вала</td>
-            </tr>
-            {% for engine in engines %}
-            <tr>
-                <td>{{ forloop.counter }}</td>
-                <td>{{ engine.name }}</td>
-                <td>{{ engine.nu }}</td>
-            </tr>
-            {% endfor %}
-        </table>
-	</body>
-</html>
+{% extends 'base.html' %}
+
+{% block title %}Просмотр введенных дизелей{% endblock %}
+
+{% block header %}Добавленные двигатели{% endblock %}
+
+{% block table %}
+    <table id="id_engines_table">
+        <tr>
+            <td>№ п./п.</td>
+            <td>Марка</td>
+            <td>Частота вращения вала</td>
+        </tr>
+        {% for engine in engines %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ engine.name }}</td>
+            <td>{{ engine.nu }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

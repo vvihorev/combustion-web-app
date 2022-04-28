@@ -1,12 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-	<head>
-		<title>Значения вибрации двигателя</title>
-	</head>
-	<body>
-		<h1>Данные двигателя введены успешно</h1>
-		<p>Значения вибрации для введенного двигателя: {{ vibration }}</p>
-		<a href="/"><button>Ввести данные для нового двигателя</button></a>
-		<a href="/all_engines"><button>Просмотреть все данные двигателей</button></a>
-	</body>
-</html>
+{% extends 'base.html' %}
+
+{% block title %}Значения вибрации двигателя{% endblock %}
+
+{% block header %}Данные двигателя введены успешно{% endblock %}
