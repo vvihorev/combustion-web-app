@@ -16,3 +16,8 @@ def engine_results(request):
     engine = Engine.objects.last()
     vibration = engine.nu * 2
     return render(request, 'engine_results.html', {'vibration':vibration})
+
+
+def all_engines_page(request):
+    engines = Engine.objects.all()
+    return render(request, 'all_engines.html', {'engines': engines})
