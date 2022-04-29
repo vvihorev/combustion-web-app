@@ -1,25 +1,10 @@
-"""dvs_criteria URL Configuration
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/4.0/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
 from django.urls import path, re_path
-from first_criteria import views
+from first_criteria import views as first_views
 
 urlpatterns = [
-    path('', views.engine_page),
-    path('add_engine', views.add_engine),
-    path('all_engines', views.all_engines_page),
-    re_path(r'^engine_results/(\d+)/$', views.engine_results),
-    path('theory', views.theory),
+    path('', first_views.engine_page),
+    path('add_engine', first_views.add_engine),
+    path('all_engines', first_views.all_engines_page),
+    re_path(r'^engine_results/(\d+)/$', first_views.engine_results),
+    path('theory', first_views.theory),
 ]
