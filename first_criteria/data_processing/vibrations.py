@@ -2,8 +2,11 @@ import math
 import pandas as pd
 from first_criteria.models import Engine
 
+# TODO: make new engines change the statisctics for b and d calculation
+FREQUENCIES = [63, 140, 250, 500, 1000, 2000, 4000, 8000]
 
-def refreshBaseEngines():
+
+def _refreshBaseEngines():
     """ Upload default engine data to the database from a csv file """
     # TODO: solution is unstable towards floats/ints, decimal separator
     tmp_data=pd.read_csv(f'first_criteria/data_processing/base_engines.csv',sep=',',decimal='.')
@@ -34,7 +37,7 @@ def refreshBaseEngines():
     Engine.objects.bulk_create(engines)
 
 
-def linear_regression(x, y):
+def _linear_regression(x, y):
     """ (X, Y) -> a, b: find linear regression coefficients for two vectors """ 
     r = x.shape[0]
     delta = r*sum(x ** 2) - sum(x)**2
@@ -43,12 +46,12 @@ def linear_regression(x, y):
     return a,b
 
 
-def plot_group(group, frequency, df):
+def _plot_group(group, frequency, df):
     """ Find and plot the regression line of a given group and frequency
         df - a DataFrame with engine data """
     frequency = str(frequency)
     df = df[df.group == group].copy()
-    C_1, c = linear_regression(df.B, df.D)
+    C_1, c = _linear_regression(df.B, df.D)
 
     df['V'] = df[frequency]
     df['B'] = -df.S_n * df.omega * df.N_max * df.delta / (df.V * df.D_czb)
@@ -76,82 +79,73 @@ def assignGroup(n):
     return -1
 
 
-def calculate_vibration_for_engine(df, res, engine_data):
-    frequencies = [int(x) for x in df.columns if x.isdigit()]
+def _calculate_vibration_for_engine(res, engine_data):
+    """ res : take regression coefficients
+        engine_data : take engine parameters 
+        -> vibrations: Dict{frequency:str: vibration:float} """
+    ed = engine_data
     vibrations = {}
-    for frequency in frequencies:
-        c, C_1 = res.loc["Group %i" % engine_data['group'], str(frequency)]
-        V = C_1 * engine_data['S_n'] * engine_data['N_max'] * engine_data['delta'] / (engine_data['D_czvt'] + c*engine_data['D_czb'])
+    
+    for frequency in FREQUENCIES:
+        c, C_1 = res.loc["Group %i" % ed['group'], str(frequency)]
+        V = C_1 * ed['S_n'] * ed['N_max'] * ed['delta'] / (ed['D_czvt'] + c*ed['D_czb'])
         vibrations[str(frequency)] = V
+
     return vibrations
 
 
-def calculate_b_d(df, res):
-    frequencies = [int(x) for x in df.columns if x.isdigit()]
+def _calculate_b_d(df):
+    """ df : initial engine data
+        -> df with B and D and res with regression coefficients
+    """
+    # create a MultiIndex for res dataframe
     arrays = [
         ["Group %i" % (x // 2 + 1) for x in range(0,8)],
         ["c", "C_1"]*5
     ]
     tuples = list(zip(*arrays))
     index = pd.MultiIndex.from_tuples(tuples, names=['group', 'coefficient'])
-    res = pd.DataFrame(columns=[str(x) for x in frequencies], index=index)
+    res = pd.DataFrame(columns=[str(x) for x in FREQUENCIES], index=index)
 
-    for frequency in frequencies:
+    for frequency in FREQUENCIES:
         frequency = str(frequency)
         df['V'] = df[frequency]
         df['D'] = -df.D_czvt / df.D_czb
-        df['omega'] = 0
-
-        for group in df.group.unique():
-            omega = math.pi * df.loc[df.group == group, 'nu'].mean() / 30
-            df.loc[df.group == group, 'omega'] = omega
-
         df['B'] = -df.S_n * df.omega * df.N_max * df.delta / (df.V * df.D_czb)
 
         for group in df.group.unique():
             df_group = df[df.group == group]
-            res.loc["Group %i" % group, frequency] = linear_regression(df_group.B, df_group.D)
-            # res.loc["Group %i" % group, frequency] = linear_regression(df_group.D, df_group.B)
+            res.loc["Group %i" % group, frequency] = _linear_regression(df_group.B, df_group.D)
     return df, res
 
 
-def engine_data_loop(df, res):
-    engine_data = get_engine_data()
-    choice = 'y'
-    while choice == 'y':
-        print("\nДля более точного вычисления коэффициентов требуется увеличить количество сравниваемых двигателей.")
-        print("\nДобавить двигатель?")
-        choice = input("y/n: ")
-        if choice == 'y':
-            new_engine_data = get_engine_data()
-            vibrations = calculate_vibration_for_engine(df, res, new_engine_data)
-            new_engine_data.update(vibrations)
-            df.loc[df.shape[0]] = new_engine_data
-            df, res = calculate_b_d(df, res)
-    vibrations = calculate_vibration_for_engine(df, res, engine_data)
+def _prepareData(df):
+    """ calclulate omega, B and D """
+    # calculate omega
+    df['omega'] = 0
+    for group in df.group.unique():
+        omega = math.pi * df.loc[df.group == group, 'nu'].mean() / 30
+        df.loc[df.group == group, 'omega'] = omega
+
+    df, res = _calculate_b_d(df)
+    return df, res
+
+
+def getVibrations(engine_data):
+    df = pd.read_csv('first_criteria/data_processing/base_engines.csv')
+    df, res = _prepareData(df)
+    
+    vibrations = _calculate_vibration_for_engine(res, engine_data)
     engine_data.update(vibrations)
-    df.loc[df.shape[0]] = engine_data
+
+    engine = Engine.objects.get(id=engine_data['id'])
+    engine.f63 = engine_data['63']
+    engine.f140 = engine_data['140']
+    engine.f250 = engine_data['250']
+    engine.f500 = engine_data['500']
+    engine.f1000 = engine_data['1000']
+    engine.f2000 = engine_data['2000']
+    engine.f4000 = engine_data['4000']
+    engine.f8000 = engine_data['8000']
+
     return df, res
-
-
-if __name__ == '__main__':
-    df = pd.read_csv('data/input.csv')
-    res = pd.DataFrame()
-
-    print_theory(df)
-    df, res = calculate_b_d(df, res)
-
-    print_linreg(res)
-
-    ans = input('Расчитать коэффициенты для двигателя?')
-    if ans == 'y':
-        df, res = engine_data_loop(df, res)
-
-    df.to_excel('results/engine_data.xlsx')
-    res.to_excel('results/lin_reg_coefficients.xlsx')
-
-    print('\nЗначения вибрации для исследуемого двигателя:')
-    print(df[[col for col in df.columns if col.isdigit()]].iloc[-1,])
-    print('\nРезультаты расчетов были помещены в папку results')
-    ask_to_continue()
-

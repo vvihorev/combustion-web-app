@@ -3,3 +3,31 @@
 {% block title %}Значения вибрации двигателя{% endblock %}
 
 {% block header %}Данные двигателя введены успешно{% endblock %}
+
+{% block table %}
+    <p>Полученные значения вибрации для двигателя</p>
+    <table id="id_engines_table">
+        <tr>
+            <td>Марка</td>
+            <td>63</td>
+            <td>140</td>
+            <td>250</td>
+            <td>500</td>
+            <td>1000</td>
+            <td>2000</td>
+            <td>4000</td>
+            <td>8000</td>
+        </tr>
+        <tr>
+            <td>{{ engine.name }}</td>
+            <td>{{ engine.f63 }}</td>
+            <td>{{ engine.f140 }}</td>
+            <td>{{ engine.f250 }}</td>
+            <td>{{ engine.f500 }}</td>
+            <td>{{ engine.f1000 }}</td>
+            <td>{{ engine.f2000 }}</td>
+            <td>{{ engine.f4000 }}</td>
+            <td>{{ engine.f8000 }}</td>
+        </tr>
+    </table>
+{% endblock %}

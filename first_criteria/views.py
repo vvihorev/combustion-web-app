@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from first_criteria.models import Engine
-from first_criteria.data_processing.vibrations import refreshBaseEngines, assignGroup
+import first_criteria.data_processing.vibrations as process_data
 
 import pandas as pd
 
@@ -10,7 +10,7 @@ def engine_page(request):
 
 
 def add_engine(request):
-    Engine.objects.create(
+    engine = Engine.objects.create(
         name=request.POST['name'],
         N_e=request.POST['N_e'],
         nu=request.POST['nu'],
@@ -20,14 +20,16 @@ def add_engine(request):
         delta=request.POST['delta'],
         D_czvt=request.POST['D_czvt'],
         D_czb=request.POST['D_czb'],
-        group=assignGroup(request.POST['nu']),
+        group=process_data.assignGroup(request.POST['nu']),
         S_n=request.POST['S_n'],
     )
-    return redirect('/engine_results')
+    return redirect(f'/engine_results/{engine.id}')
 
 
-def engine_results(request):
-    return render(request, 'engine_results.html')
+def engine_results(request, engine_id):
+    engine = Engine.objects.get(id=engine_id)
+    process_data.getVibrations(engine.__dict__)
+    return render(request, 'engine_results.html', {'engine': engine})
 
 
 def all_engines_page(request):
