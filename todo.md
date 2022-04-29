@@ -10,5 +10,6 @@
 - [X] sort listings by frequency
 - [X] onClick on name in listing, vibrations for the engine are recalculated
 - [X] create a theory page
-- [ ] make math symbols display properly https://www.mathjax.org/ 
-- [ ] add some style https://tailwindcss.com/docs/installation
+- [ ] fir error in vibration calculation (vibrations, L91 missing omega?)
+- [X] make math symbols display properly https://www.mathjax.org/ 
+- [X] add some style https://tailwindcss.com/docs/installation

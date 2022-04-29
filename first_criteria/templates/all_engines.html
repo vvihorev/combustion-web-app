@@ -5,52 +5,62 @@
 {% block header %}Добавленные двигатели{% endblock %}
 
 {% block table %}
-    <table id="id_engines_table">
-        <tr>
-            <td>№ п./п.</td>
-            <td>name</td>
-            <td>N_e</td>
-            <td>nu</td>
-            <td>pe</td>
-            <td>pz</td>
-            <td>N_max</td>
-            <td>delta</td>
-            <td>D_czvt</td>
-            <td>D_czb</td>
-            <td>group</td>
-            <td>63</td>
-            <td>140</td>
-            <td>250</td>
-            <td>500</td>
-            <td>1000</td>
-            <td>2000</td>
-            <td>4000</td>
-            <td>8000</td>
-            <td>S_n</td>
-        </tr>
-        {% for engine in engines %}
-        <tr>
-            <td>{{ forloop.counter }}</td>
-            <td><a href="/engine_results/{{ engine.id }}/">{{ engine.name }}</a></td>
-            <td>{{ engine.N_e }}</td>
-            <td>{{ engine.nu }}</td>
-            <td>{{ engine.pe }}</td>
-            <td>{{ engine.pz }}</td>
-            <td>{{ engine.N_max }}</td>
-            <td>{{ engine.delta }}</td>
-            <td>{{ engine.D_czvt }}</td>
-            <td>{{ engine.D_czb }}</td>
-            <td>{{ engine.group }}</td>
-            <td>{{ engine.f63 }}</td>
-            <td>{{ engine.f140 }}</td>
-            <td>{{ engine.f250 }}</td>
-            <td>{{ engine.f500 }}</td>
-            <td>{{ engine.f1000 }}</td>
-            <td>{{ engine.f2000 }}</td>
-            <td>{{ engine.f4000 }}</td>
-            <td>{{ engine.f8000 }}</td>
-            <td>{{ engine.S_n }}</td>
-        </tr>
-        {% endfor %}
-    </table>
+    <div class="container">
+        <div class="row">
+            <div class="column text-center">
+                <table id="id_engines_table" class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">№</th>
+                            <th scope="col">name</th>
+                            <th scope="col">N_e</th>
+                            <th scope="col">nu</th>
+                            <th scope="col">pe</th>
+                            <th scope="col">pz</th>
+                            <th scope="col">N_max</th>
+                            <th scope="col">delta</th>
+                            <th scope="col">D_czvt</th>
+                            <th scope="col">D_czb</th>
+                            <th scope="col">group</th>
+                            <th scope="col">63</th>
+                            <th scope="col">140</th>
+                            <th scope="col">250</th>
+                            <th scope="col">500</th>
+                            <th scope="col">1000</th>
+                            <th scope="col">2000</th>
+                            <th scope="col">4000</th>
+                            <th scope="col">8000</th>
+                            <th scope="col">S_n</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for engine in engines %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td><a href="/engine_results/{{ engine.id }}/">{{ engine.name }}</a></td>
+                                <td>{{ engine.N_e }}</td>
+                                <td>{{ engine.nu }}</td>
+                                <td>{{ engine.pe }}</td>
+                                <td>{{ engine.pz }}</td>
+                                <td>{{ engine.N_max }}</td>
+                                <td>{{ engine.delta }}</td>
+                                <td>{{ engine.D_czvt }}</td>
+                                <td>{{ engine.D_czb }}</td>
+                                <td>{{ engine.group }}</td>
+                                <td class="table-secondary">{{ engine.f63 }}</td>
+                                <td class="table-secondary">{{ engine.f140 }}</td>
+                                <td class="table-secondary">{{ engine.f250 }}</td>
+                                <td class="table-secondary">{{ engine.f500 }}</td>
+                                <td class="table-secondary">{{ engine.f1000 }}</td>
+                                <td class="table-secondary">{{ engine.f2000 }}</td>
+                                <td class="table-secondary">{{ engine.f4000 }}</td>
+                                <td class="table-secondary">{{ engine.f8000 }}</td>
+                                <td>{{ engine.S_n }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 {% endblock %}

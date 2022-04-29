@@ -5,29 +5,37 @@
 {% block header %}Значения вибрации двигателя{% endblock %}
 
 {% block table %}
-    <p>Полученные значения вибрации для двигателя</p>
-    <table id="id_engines_table">
-        <tr>
-            <td>Марка</td>
-            <td>63</td>
-            <td>140</td>
-            <td>250</td>
-            <td>500</td>
-            <td>1000</td>
-            <td>2000</td>
-            <td>4000</td>
-            <td>8000</td>
-        </tr>
-        <tr>
-            <td>{{ engine.name }}</td>
-            <td>{{ engine.f63 }}</td>
-            <td>{{ engine.f140 }}</td>
-            <td>{{ engine.f250 }}</td>
-            <td>{{ engine.f500 }}</td>
-            <td>{{ engine.f1000 }}</td>
-            <td>{{ engine.f2000 }}</td>
-            <td>{{ engine.f4000 }}</td>
-            <td>{{ engine.f8000 }}</td>
-        </tr>
-    </table>
+    <p class="text-center">Полученные значения вибрации для двигателя</p>
+    <div class="container">
+        <div class="column text-center">
+            <table id="id_engines_table" class="table">
+                <thead>
+                    <tr>
+                        <th>Марка</th>
+                        <th>63</th>
+                        <th>140</th>
+                        <th>250</th>
+                        <th>500</th>
+                        <th>1000</th>
+                        <th>2000</th>
+                        <th>4000</th>
+                        <th>8000</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="table-primary">
+                        <td>{{ engine.name }}</td>
+                        <td>{{ engine.f63 }}</td>
+                        <td>{{ engine.f140 }}</td>
+                        <td>{{ engine.f250 }}</td>
+                        <td>{{ engine.f500 }}</td>
+                        <td>{{ engine.f1000 }}</td>
+                        <td>{{ engine.f2000 }}</td>
+                        <td>{{ engine.f4000 }}</td>
+                        <td>{{ engine.f8000 }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>  
 {% endblock %}
