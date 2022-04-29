@@ -7,8 +7,9 @@
 - [X] import linear regression
 - [X] add all neccessary fields for engines on listings
 - [X] add all neccessary fields for engines on input form
-- [ ] import B and D calculations
+- [X] import B and D calculations
 - [ ] sort listings by frequency
+- [ ] onClick on name in listing, vibrations for the engine are recalculated
 - [ ] create a theory page
 - [ ] make math symbols display properly
 - [ ] add some style
