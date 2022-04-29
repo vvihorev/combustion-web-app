@@ -20,5 +20,6 @@ urlpatterns = [
     path('', views.engine_page),
     path('add_engine', views.add_engine),
     path('all_engines', views.all_engines_page),
-    re_path(r'^engine_results/(\d+)/$', views.engine_results)
+    re_path(r'^engine_results/(\d+)/$', views.engine_results),
+    path('theory', views.theory),
 ]

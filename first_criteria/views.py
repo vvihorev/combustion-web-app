@@ -33,5 +33,9 @@ def engine_results(request, engine_id):
 
 
 def all_engines_page(request):
-    engines = Engine.objects.all()
+    engines = Engine.objects.order_by('nu')
     return render(request, 'all_engines.html', {'engines': engines})
+
+
+def theory(request):
+    return render(request, 'theory.html')

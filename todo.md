@@ -1,15 +1,14 @@
 # Tasks 
 - [X] add page to view all added engines
 - [X] add page with engine data input
-
 - [X] get base engines data into the database automatically
 - [X] import my calculations: engine group assignment
 - [X] import linear regression
 - [X] add all neccessary fields for engines on listings
 - [X] add all neccessary fields for engines on input form
 - [X] import B and D calculations
-- [ ] sort listings by frequency
-- [ ] onClick on name in listing, vibrations for the engine are recalculated
-- [ ] create a theory page
-- [ ] make math symbols display properly
-- [ ] add some style
+- [X] sort listings by frequency
+- [X] onClick on name in listing, vibrations for the engine are recalculated
+- [X] create a theory page
+- [ ] make math symbols display properly https://www.mathjax.org/ 
+- [ ] add some style https://tailwindcss.com/docs/installation
