@@ -28,7 +28,7 @@ def add_engine(request):
 
 def engine_results(request, engine_id):
     engine = Engine.objects.get(id=engine_id)
-    print(process_data.getVibrations(engine.__dict__))
+    process_data.getVibrations(engine.__dict__)
     return render(request, 'engine_results.html', {'engine': engine})
 
 
