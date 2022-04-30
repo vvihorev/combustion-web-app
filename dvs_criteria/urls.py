@@ -7,4 +7,5 @@ urlpatterns = [
     path('all_engines', first_views.all_engines_page),
     re_path(r'^engine_results/(\d+)/$', first_views.engine_results),
     path('theory', first_views.theory),
+    path('upload_base_engines', first_views.upload_base_engines)
 ]

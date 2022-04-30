@@ -39,3 +39,8 @@ def all_engines_page(request):
 
 def theory(request):
     return render(request, 'theory.html')
+
+
+def upload_base_engines(request):
+    process_data._refreshBaseEngines()
+    return redirect('/all_engines')
