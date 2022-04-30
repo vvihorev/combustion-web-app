@@ -28,8 +28,14 @@ def add_engine(request):
 
 def engine_results(request, engine_id):
     engine = Engine.objects.get(id=engine_id)
-    process_data.getVibrations(engine.__dict__)
+    print(process_data.getVibrations(engine.__dict__))
     return render(request, 'engine_results.html', {'engine': engine})
+
+
+def delete_engine(request, engine_id):
+    engine = Engine.objects.get(id=engine_id)
+    engine.delete()
+    return redirect('/all_engines')
 
 
 def all_engines_page(request):

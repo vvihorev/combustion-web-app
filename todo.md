@@ -10,6 +10,10 @@
 - [X] sort listings by frequency
 - [X] onClick on name in listing, vibrations for the engine are recalculated
 - [X] create a theory page
-- [ ] fir error in vibration calculation (vibrations, L91 missing omega?)
 - [X] make math symbols display properly https://www.mathjax.org/ 
 - [X] add some style https://tailwindcss.com/docs/installation
+- [ ] fix error in vibration calculation (vibrations, L91 missing omega?)
+- [ ] add new engines to coefficients calculations (get engines data from the database, not the csv file)
+- [ ] input fields are not stable: int or string, decimal separator and so on
+- [ ] limit cells in all_engines table to 3 decimal points
+- [ ] first time around (before an update) vibrations for an engine are not calculated
