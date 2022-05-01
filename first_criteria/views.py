@@ -29,7 +29,17 @@ def add_engine(request):
 def engine_results(request, engine_id):
     engine = Engine.objects.get(id=engine_id)
     process_data.getVibrations(engine.__dict__)
-    return render(request, 'engine_results.html', {'engine': engine})
+    results = process_data._calculate_frequency_b_d(engine.nu)
+    
+    df = results['df']
+    context = {
+        'engine': engine,
+        'results': results,
+        'df': df.to_html(),
+        'df_dict': df.to_dict(),
+        'df_rec': df.to_dict(orient='records')
+    }
+    return render(request, 'engine_results.html', context)
 
 
 def delete_engine(request, engine_id):

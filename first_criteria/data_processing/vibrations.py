@@ -96,6 +96,43 @@ def _calculate_vibration_for_engine(res, engine_data):
     return vibrations
 
 
+def _calculate_frequency_b_d(frequency):
+    """ df: initial engine data
+        frequency: int
+        -> df with B and D and res with regression coefficients
+    """
+    df = pd.read_csv('first_criteria/data_processing/base_engines.csv')
+    df['omega'] = 0
+    for group in df.group.unique():
+        omega = math.pi * df.loc[df.group == group, 'nu'].mean() / 30
+        df.loc[df.group == group, 'omega'] = omega
+
+    group = assignGroup(frequency)
+
+    min_diff = float('inf')
+    min_index = 0
+    for i, freq in enumerate(FREQUENCIES):
+        if abs(frequency - freq) < min_diff:
+            min_diff = abs(frequency - freq)
+            min_index = i
+    frequency = str(FREQUENCIES[min_index])
+
+    df = df[df.group == group].copy()
+    df['V'] = df[frequency]
+    df['D'] = -df.D_czvt / df.D_czb
+    df['B'] = -df.S_n * df.omega * df.N_max * df.delta / (df.V * df.D_czb)
+    C_1, c = _linear_regression(df.B, df.D)
+    V = C_1 * omega * df['S_n'] * df['N_max'] * df['delta'] / (df['D_czb'] + c*df['D_czvt'])
+
+    return {
+        'group': group,
+        'df': df,
+        'C_1': C_1,
+        'c': c,
+        'frequency': frequency
+    }
+
+
 def _calculate_b_d(df):
     """ df : initial engine data
         -> df with B and D and res with regression coefficients
@@ -103,7 +140,7 @@ def _calculate_b_d(df):
     # create a MultiIndex for res dataframe
     arrays = [
         ["Group %i" % (x // 2 + 1) for x in range(0,8)],
-        ["c", "C_1"]*5
+        ["C_1", "c"]*5
     ]
     tuples = list(zip(*arrays))
     index = pd.MultiIndex.from_tuples(tuples, names=['group', 'coefficient'])
@@ -121,21 +158,13 @@ def _calculate_b_d(df):
     return df, res
 
 
-def _prepareData(df):
-    """ calclulate omega, B and D """
-    # calculate omega
+def getVibrations(engine_data):
+    df = pd.read_csv('first_criteria/data_processing/base_engines.csv')
     df['omega'] = 0
     for group in df.group.unique():
         omega = math.pi * df.loc[df.group == group, 'nu'].mean() / 30
         df.loc[df.group == group, 'omega'] = omega
-
     df, res = _calculate_b_d(df)
-    return df, res
-
-
-def getVibrations(engine_data):
-    df = pd.read_csv('first_criteria/data_processing/base_engines.csv')
-    df, res = _prepareData(df)
     
     vibrations = _calculate_vibration_for_engine(res, engine_data)
     engine_data.update(vibrations)

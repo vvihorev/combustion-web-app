@@ -37,8 +37,33 @@
                 </tbody>
             </table>
         </div>
-        <div>
-            <a href="/delete_engine/{{ engine.id }}" class="btn btn-secondary"><button>Удалить данные о двигателе</button></a>
+
+        <div class="col">
+            <div class="row">
+                <a href="/delete_engine/{{ engine.id }}"><button>Удалить данные о двигателе</button></a>
+            </div>
         </div>
-    </div>  
+        <div class="col-md-3">
+            <p>Группа: {{ results.group }}</p>
+            <p>\(C_1 = \){{ results.C_1|floatformat:"3" }}</p>
+            <p>\(c = \){{ results.c|floatformat:"3" }}</p>
+            <p>Частота: {{ results.frequency }}</p>
+        </div> 
+        <table class="table">
+            <thead>
+                <tr>
+                    {% for key, value in df_dict.items %}
+                        <th>{{ key }}</th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            {% for rec in df_rec %}
+                <tr>
+                    {% for i2, k2 in rec.items %}
+                        <td>{{ k2|floatformat:"3" }}</td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </table>
+    </div> 
 {% endblock %}
