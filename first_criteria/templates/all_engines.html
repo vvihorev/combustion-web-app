@@ -38,23 +38,23 @@
                             <tr>
                                 <td>{{ forloop.counter }}</td>
                                 <td><a href="/engine_results/{{ engine.id }}">{{ engine.name }}</a></td>
-                                <td>{{ engine.N_e }}</td>
-                                <td>{{ engine.nu }}</td>
-                                <td>{{ engine.pe }}</td>
-                                <td>{{ engine.pz }}</td>
-                                <td>{{ engine.N_max }}</td>
-                                <td>{{ engine.delta }}</td>
-                                <td>{{ engine.D_czvt }}</td>
-                                <td>{{ engine.D_czb }}</td>
-                                <td>{{ engine.group }}</td>
-                                <td class="table-secondary">{{ engine.f63 }}</td>
-                                <td class="table-secondary">{{ engine.f140 }}</td>
-                                <td class="table-secondary">{{ engine.f250 }}</td>
-                                <td class="table-secondary">{{ engine.f500 }}</td>
-                                <td class="table-secondary">{{ engine.f1000 }}</td>
-                                <td class="table-secondary">{{ engine.f2000 }}</td>
-                                <td class="table-secondary">{{ engine.f4000 }}</td>
-                                <td class="table-secondary">{{ engine.f8000 }}</td>
+                                <td>{{ engine.N_e|floatformat:"0" }}</td>
+                                <td>{{ engine.nu|floatformat:"0" }}</td>
+                                <td>{{ engine.pe|floatformat:"2" }}</td>
+                                <td>{{ engine.pz|floatformat:"2" }}</td>
+                                <td>{{ engine.N_max|floatformat:"0" }}</td>
+                                <td>{{ engine.delta|floatformat:"5" }}</td>
+                                <td>{{ engine.D_czvt|floatformat:"0" }}</td>
+                                <td>{{ engine.D_czb|floatformat:"0" }}</td>
+                                <td>{{ engine.group|floatformat:"0" }}</td>
+                                <td class="table-secondary">{{ engine.f63|floatformat:"0" }}</td>
+                                <td class="table-secondary">{{ engine.f140|floatformat:"0" }}</td>
+                                <td class="table-secondary">{{ engine.f250|floatformat:"0" }}</td>
+                                <td class="table-secondary">{{ engine.f500|floatformat:"0" }}</td>
+                                <td class="table-secondary">{{ engine.f1000|floatformat:"0" }}</td>
+                                <td class="table-secondary">{{ engine.f2000|floatformat:"0" }}</td>
+                                <td class="table-secondary">{{ engine.f4000|floatformat:"0" }}</td>
+                                <td class="table-secondary">{{ engine.f8000|floatformat:"0" }}</td>
                                 <td>{{ engine.S_n }}</td>
                             </tr>
                         {% endfor %}

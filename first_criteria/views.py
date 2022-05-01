@@ -35,9 +35,7 @@ def engine_results(request, engine_id):
     context = {
         'engine': engine,
         'results': results,
-        'df': df.to_html(),
-        'df_dict': df.to_dict(),
-        'df_rec': df.to_dict(orient='records')
+        'df': df
     }
     return render(request, 'engine_results.html', context)
 

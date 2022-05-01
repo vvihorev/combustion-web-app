@@ -25,14 +25,14 @@
                 <tbody>
                     <tr class="table-primary">
                         <td>{{ engine.name }}</td>
-                        <td>{{ engine.f63 }}</td>
-                        <td>{{ engine.f140 }}</td>
-                        <td>{{ engine.f250 }}</td>
-                        <td>{{ engine.f500 }}</td>
-                        <td>{{ engine.f1000 }}</td>
-                        <td>{{ engine.f2000 }}</td>
-                        <td>{{ engine.f4000 }}</td>
-                        <td>{{ engine.f8000 }}</td>
+                        <td>{{ engine.f63|floatformat:"0" }}</td>
+                        <td>{{ engine.f140|floatformat:"0" }}</td>
+                        <td>{{ engine.f250|floatformat:"0" }}</td>
+                        <td>{{ engine.f500|floatformat:"0" }}</td>
+                        <td>{{ engine.f1000|floatformat:"0" }}</td>
+                        <td>{{ engine.f2000|floatformat:"0" }}</td>
+                        <td>{{ engine.f4000|floatformat:"0" }}</td>
+                        <td>{{ engine.f8000|floatformat:"0" }}</td>
                     </tr>
                 </tbody>
             </table>
@@ -43,27 +43,73 @@
                 <a href="/delete_engine/{{ engine.id }}"><button>Удалить данные о двигателе</button></a>
             </div>
         </div>
+
         <div class="col-md-3">
             <p>Группа: {{ results.group }}</p>
             <p>\(C_1 = \){{ results.C_1|floatformat:"3" }}</p>
             <p>\(c = \){{ results.c|floatformat:"3" }}</p>
             <p>Частота: {{ results.frequency }}</p>
         </div> 
-        <table class="table">
-            <thead>
-                <tr>
-                    {% for key, value in df_dict.items %}
-                        <th>{{ key }}</th>
+        
+        <div class="text-center scrollme">
+            <table class="table table-responsive text-nowrap">
+                <thead>
+                    <tr>
+                        <th>name</th>
+                        <th>N_e</th>
+                        <th>nu</th>
+                        <th>pe</th>
+                        <th>pz</th>
+                        <th>N_max</th>
+                        <th>delta</th>
+                        <th>D_czvt</th>
+                        <th>D_czb</th>
+                        <th>group</th>
+                        <th>63</th>
+                        <th>140</th>
+                        <th>250</th>
+                        <th>500</th>
+                        <th>1000</th>
+                        <th>2000</th>
+                        <th>4000</th>
+                        <th>8000</th>
+                        <th>S_n</th>
+                        <th>omega</th>
+                        <th>V</th>
+                        <th>D</th>
+                        <th>B</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for i,row in df.iterrows %}
+                    <tr>
+                        <td>{{ row.name }}</a></td>
+                        <td>{{ row.N_e|floatformat:"0" }}</td>
+                        <td>{{ row.nu|floatformat:"0" }}</td>
+                        <td>{{ row.pe|floatformat:"2" }}</td>
+                        <td>{{ row.pz|floatformat:"2" }}</td>
+                        <td>{{ row.N_max|floatformat:"0" }}</td>
+                        <td>{{ row.delta|floatformat:"5" }}</td>
+                        <td>{{ row.D_czvt|floatformat:"0" }}</td>
+                        <td>{{ row.D_czb|floatformat:"0" }}</td>
+                        <td>{{ row.group|floatformat:"0" }}</td>
+                        <td class="table-secondary">{{ row.63|floatformat:"0" }}</td>
+                        <td class="table-secondary">{{ row.140|floatformat:"0" }}</td>
+                        <td class="table-secondary">{{ row.250|floatformat:"0" }}</td>
+                        <td class="table-secondary">{{ row.500|floatformat:"0" }}</td>
+                        <td class="table-secondary">{{ row.1000|floatformat:"0" }}</td>
+                        <td class="table-secondary">{{ row.2000|floatformat:"0" }}</td>
+                        <td class="table-secondary">{{ row.4000|floatformat:"0" }}</td>
+                        <td class="table-secondary">{{ row.8000|floatformat:"0" }}</td>
+                        <td>{{ row.S_n }}</td>
+                        <td>{{ row.omega|floatformat:"0" }}</td>
+                        <td>{{ row.V|floatformat:"0" }}</td>
+                        <td>{{ row.D|floatformat:"3" }}</td>
+                        <td>{{ row.B|floatformat:"7" }}</td>
+                    </tr>
                     {% endfor %}
-                </tr>
-            </thead>
-            {% for rec in df_rec %}
-                <tr>
-                    {% for i2, k2 in rec.items %}
-                        <td>{{ k2|floatformat:"3" }}</td>
-                    {% endfor %}
-                </tr>
-            {% endfor %}
-        </table>
+                </tbody>
+            </table>
+        </div>
     </div> 
 {% endblock %}
