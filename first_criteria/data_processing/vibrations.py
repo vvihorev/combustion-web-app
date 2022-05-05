@@ -45,7 +45,7 @@ def _linear_regression(x, y):
     return C_1, c
 
 
-def old_linear_regression(x, y):
+def _old_linear_regression(x, y):
     """ (X, Y) -> a, b: find linear regression coefficients for two vectors """ 
     r = x.shape[0]
     delta = r*sum(x ** 2) - sum(x)**2
@@ -99,6 +99,7 @@ def _calculate_vibration_for_engine(res, engine_data):
         C_1, c = res.loc["Group %i" % ed['group'], str(frequency)]
         # TODO: this formula might be the source of evil
         V = C_1 * omega * ed['S_n'] * ed['N_max'] * ed['delta'] / (c*ed['D_czb'] + ed['D_czvt'])
+        V = 20 * math.log10(abs(V * 10**3)) + 86
         vibrations[str(frequency)] = V
 
     return vibrations
@@ -127,6 +128,7 @@ def _calculate_frequency_b_d(frequency):
 
     df = df[df.group == group].copy()
     df['V'] = df[frequency]
+    df.V = 10**((df.V - 86) / 20) / 10**3
     df['D'] = -df.D_czvt / df.D_czb
     df['B'] = -df.S_n * df.omega * df.N_max * df.delta / (df.V * df.D_czb)
     C_1, c = _linear_regression(df.B, df.D)
@@ -157,6 +159,7 @@ def _calculate_b_d(df):
     for frequency in FREQUENCIES:
         frequency = str(frequency)
         df['V'] = df[frequency]
+        df.V = 10**((df.V - 86) / 20) / 10**3
         df['D'] = -df.D_czvt / df.D_czb
         df['B'] = -df.S_n * df.omega * df.N_max * df.delta / (df.V * df.D_czb)
 
