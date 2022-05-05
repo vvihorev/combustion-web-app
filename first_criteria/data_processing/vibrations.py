@@ -1,5 +1,6 @@
 import math
 import pandas as pd
+import numpy as np
 from first_criteria.models import Engine
 
 # TODO: make new engines change the statisctics for b and d calculation
@@ -38,6 +39,13 @@ def _refreshBaseEngines():
 
 
 def _linear_regression(x, y):
+    A = np.vstack([x, np.ones(len(x))]).T
+    m, c = np.linalg.lstsq(A, y, rcond=None)[0]
+    C_1 = m
+    return C_1, c
+
+
+def old_linear_regression(x, y):
     """ (X, Y) -> a, b: find linear regression coefficients for two vectors """ 
     r = x.shape[0]
     delta = r*sum(x ** 2) - sum(x)**2
@@ -90,7 +98,7 @@ def _calculate_vibration_for_engine(res, engine_data):
         omega = 2 * math.pi * frequency / 60
         C_1, c = res.loc["Group %i" % ed['group'], str(frequency)]
         # TODO: this formula might be the source of evil
-        V = C_1 * omega * ed['S_n'] * ed['N_max'] * ed['delta'] / (ed['D_czb'] + c*ed['D_czvt'])
+        V = C_1 * omega * ed['S_n'] * ed['N_max'] * ed['delta'] / (c*ed['D_czb'] + ed['D_czvt'])
         vibrations[str(frequency)] = V
 
     return vibrations
@@ -122,7 +130,7 @@ def _calculate_frequency_b_d(frequency):
     df['D'] = -df.D_czvt / df.D_czb
     df['B'] = -df.S_n * df.omega * df.N_max * df.delta / (df.V * df.D_czb)
     C_1, c = _linear_regression(df.B, df.D)
-    V = C_1 * omega * df['S_n'] * df['N_max'] * df['delta'] / (df['D_czb'] + c*df['D_czvt'])
+    V = C_1 * omega * df['S_n'] * df['N_max'] * df['delta'] / (c*df['D_czb'] + df['D_czvt'])
 
     return {
         'group': group,
