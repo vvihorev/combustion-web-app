@@ -99,7 +99,10 @@ def _calculate_vibration_for_engine(res, engine_data):
         C_1, c = res.loc["Group %i" % ed['group'], str(frequency)]
         # TODO: this formula might be the source of evil
         V = C_1 * omega * ed['S_n'] * ed['N_max'] * ed['delta'] / (c*ed['D_czb'] + ed['D_czvt'])
-        V = 20 * math.log10(abs(V * 10**3)) + 86
+        if V > 0:
+            V = 20 * math.log10(V * 10**3) + 86
+        else:
+            V = 0
         vibrations[str(frequency)] = V
 
     return vibrations

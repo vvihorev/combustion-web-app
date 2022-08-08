@@ -17,3 +17,6 @@
 - [ ] input fields are not stable: int or string, decimal separator and so on
 - [ ] limit cells in all_engines table to 3 decimal points
 - [ ] first time around (before an update) vibrations for an engine are not calculated
+
+- [ ] code duplicated: calculate_b_d and calculate_frequency_b_d
+- [ ] abs() in vibrations L102 is cheating: why do we get negative numbers?
